@@ -8,13 +8,21 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback } from 'react-native'
 
+    import DateTimePicker from '@react-native-community/datetimepicker'
+
 import commonStyles from '../commonStyles'
 
-const initialState = { desc: '' }
+const initialState = { desc: '', date: new Date() }
 export default class AddTask extends Component {
 
     state = {
         ...initialState
+    }
+
+    getDateTimePicker = () => {
+        return <DateTimePicker
+                value={this.state.date} mode='date'
+                onChange={(_, date) => this.setState({ date })} />
     }
 
     render () {
@@ -29,14 +37,18 @@ export default class AddTask extends Component {
 
                 <View style={styles.container}>
                     <Text style={styles.header}>Nova Tarefa</Text>
+
                     <TextInput style={styles.input}
                     placeholder='Informe a descrição...'
                     onChangeText={desc => this.setState({ desc })}
                     value={this.state.desc} />
+                    {this.getDateTimePicker()}
+                    
                     <View style={styles.buttons}>
                         <TouchableOpacity onPress={this.props.onCancel}>
                             <Text style={styles.button}>Cancelar</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity>
                             <Text style={styles.button}>Salvar</Text>
                         </TouchableOpacity>
