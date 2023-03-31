@@ -5,7 +5,7 @@ import {
     StyleSheet, 
     TouchableOpacity,
     TouchableWithoutFeedback } from 'react-native'
-import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import commonStyles from '../commonStyles'
@@ -30,20 +30,22 @@ export default props => {
     }
 
     return (
-        <Swipeable renderRightActions={getRightContent} >
-            <View style={styles.container}>
-                <TouchableWithoutFeedback
-                    onPress={() => props.toggleTask(props.id)}>
-                    <View style={styles.checkContainer}>
-                        {getCheckView(props.doneAt)}
+        <GestureHandlerRootView>
+            <Swipeable renderRightActions={getRightContent} >
+                <View style={styles.container}>
+                    <TouchableWithoutFeedback
+                        onPress={() => props.toggleTask(props.id)}>
+                        <View style={styles.checkContainer}>
+                            {getCheckView(props.doneAt)}
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <View>
+                        <Text style={[styles.desc, doneOrNotStyle]}>{props.desc}</Text>
+                        <Text style={styles.date}>{formattedDate}</Text>
                     </View>
-                </TouchableWithoutFeedback>
-                <View>
-                    <Text style={[styles.desc, doneOrNotStyle]}>{props.desc}</Text>
-                    <Text style={styles.date}>{formattedDate}</Text>
                 </View>
-            </View>
-        </Swipeable>
+            </Swipeable>
+        </GestureHandlerRootView>
     )
 }
 
