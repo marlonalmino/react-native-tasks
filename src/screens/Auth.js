@@ -5,7 +5,6 @@ import {
     StyleSheet, 
     View, 
     TouchableOpacity,
-    Alert
 } from 'react-native'
 
 import axios from 'axios'
@@ -15,6 +14,7 @@ import commonStyles from '../commonStyles'
 import AuthInput from '../components/AuthInput'
 
 import { server, showError, showSuccess } from '../common'
+import { CommonActions } from '@react-navigation/native'
 
 const initialState = {
     name: '',
@@ -35,7 +35,7 @@ export default class Auth extends Component {
         if (this.state.stageNew) {
             this.signup()
         } else {
-            Alert.alert('Sucesso!', 'Logar')
+            this.signin()
         }
     }
 
@@ -50,6 +50,31 @@ export default class Auth extends Component {
 
             showSuccess('Usuário cadastrado!')
             this.setState({ ...initialState })
+        } catch (err) {
+            showError(err)
+        }
+    }
+
+    signin = async () => {
+        try {
+            const res = await axios.post(`${server}/signin`, {
+                email: this.state.email,
+                password: this.state.password,
+            })
+
+            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            
+            this.props.navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'Home',
+                            params: res.data,
+                        }
+                    ]
+                })
+            )
         } catch (err) {
             showError(err)
         }
