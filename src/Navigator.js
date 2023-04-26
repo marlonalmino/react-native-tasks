@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Auth from './screens/Auth'
 import Menu from './screens/Menu'
 import TaskList from './screens/TaskList'
+import AuthOrApp from './screens/AuthOrApp'
 
 import commonStyles from './commonStyles'
 
@@ -53,6 +54,7 @@ const DrawerNavigator = props => {
 const AuthNavigator = () => {
     return (
         <NativeStack.Navigator screenOptions={{ headerShown: false }}>
+            <NativeStack.Screen name='AuthOrApp' component={AuthOrApp} />
             <NativeStack.Screen name='Auth' component={Auth} />
             <NativeStack.Screen name='Home' component={DrawerNavigator} />
         </NativeStack.Navigator>
