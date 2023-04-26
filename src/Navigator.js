@@ -23,9 +23,10 @@ const menuConfig = {
 }
  
 const DrawerNavigator = props => {
+    const { email, name } = props.route.params
     return (
         <Drawer.Navigator screenOptions={menuConfig} 
-        drawerContent={(props) => <Menu {...props} />} >
+        drawerContent={(props) => <Menu {...props} email={email} name={name} />} >
             {/* HOJE */}
             <Drawer.Screen name='Today' options={{ title: 'Hoje' }} >
                 {props => <TaskList {...props} title='Hoje' daysAhead={0} />}
