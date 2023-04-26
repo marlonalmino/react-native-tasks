@@ -3,7 +3,7 @@ const moment = require('moment')
 module.exports = (app) => {
     const getTasks = (req, res) => {
         const date = req.query.date
-            ? require.query.date
+            ? req.query.date
             : moment().endOf('day').toDate()
 
         app.db('tasks')
